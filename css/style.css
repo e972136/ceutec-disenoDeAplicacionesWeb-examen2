@@ -7,3 +7,13 @@
 .separar-iconos-redes{
     margin-right: 15px;
 }
+
+.imagen-producto{    
+    height: 350px;
+    object-fit: contain;
+}
+
+.imagen-producto-venta{    
+    height: 100px;
+    object-fit: contain;
+}
