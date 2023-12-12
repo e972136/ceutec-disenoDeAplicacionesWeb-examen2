@@ -43,7 +43,7 @@ function getTable(head, tbody, title) {
         "<p class='h2 my-4 text-center'>" +
         title +
         "</p>" +
-        "<table class='table align-middle text-center'>" +
+        "<table class='table align-middle'>" +
         "<thead>" +
         head +
         "</thead><tbody>" +
@@ -61,13 +61,12 @@ function showProducts(modalBody) {
             "</div>";
     } else {
         let headListproducts =
-            "<tr>" +
-            "<th>#</th>" +
-            "<th>Nombre</th>" +
+            "<tr>" +            
             "<th class='head-img-table'>Imagen</th>" +
-            "<th>Cantidad</th>" +
+            "<th>Nombre</th>" +            
             "<th>Precio</th>" +
-            "<th></th>" +
+            "<th>Cantidad</th>" +            
+            "<th>  </th>" +
             "</tr>";
         let tbodyListproducts = "";
         let table;
@@ -75,75 +74,25 @@ function showProducts(modalBody) {
 
         for (let i = 0; i < products.length; i++) {
             tbodyListproducts +=
-                "<tr>" +
-                "<td>" +
-                (i + 1) +
-                "</td>" +
-                "<td>" +
-                products[i].objTitle +
-                "</td>" +
-                "<td><img src='" +
-                products[i].objImg +
-                "' class='img-responsive imagen-producto-venta'></td>" +
-                "<td><input type='number' value='" +
-                products[i].objCant +
-                "' class='cantidad-product'></td>" +
-                "<td>L " +
-                products[i].objPrice +
-                "</td>" +
-                "<td><button type='button' class='btn btn-sm btn-danger' onclick='deleteProduct(" +
-                i +
-                ")'>-</button></td>";
-            ("</tr>");
+                "<tr>" +                
+                "<td class='col-5'><img src='" + products[i].objImg + "' class='img-responsive imagen-producto-venta'></td>" +
+                "<td class='col-4'>" + products[i].objTitle + "</td>" +                
+                "<td class='col-1'>L " + products[i].objPrice + "</td>" +
+                "<td class='col-1'><input type='number' value='" + products[i].objCant + "' class='form-control cantidad-product'></td>" +                
+                "<td class='col-1'><button type='button' class='btn btn-sm btn-danger' onclick='deleteProduct("+ i +")'> X </button></td>"+
+                "</tr>";        
         }
 
         //Mostramos la lista de productos
-        table = getTable(headListproducts, tbodyListproducts, "Lista de Productos");
+        table = getTable(headListproducts, tbodyListproducts, " ");
         //Agregamos boton para realizar caclculos
         buttonCalculos =
             "<div class='d-grid gap-2'>" +
-            "<button class='btn btn-primary' type='button' onclick='getCalculates()'>Detalle de Compra</button>" +
+            "<button class='btn btn-warning' type='button' onclick='getCalculates()'>Calcular</button>" +
             "</div>";
         modalBody.innerHTML = table + buttonCalculos;
     }
 
-    function getCalculates() {
-        let tbodyDetails = "";
-        let subtotal = 0; //La suma de la Cantidad * Precio de cada producta
-        let isv = 0; //15% de impuesto y sera subtotal*impuesto
-        let total = 0; //subtotal+impuesto
-        let cantidad = document.getElementsByClassName("cantidad-product");
-        let detailtable = "";
-
-        for (let i = 0; i < products.length; i++) {
-            subtotal += products[i].objPrice * parseInt(cantidad[i].value);
-        }
-
-        isv = subtotal * 0.15;
-        total = isv + subtotal;
-
-        tbodyDetails =
-            "<tr>" +
-            "<td>Subtotal:</td><td>" +
-            subtotal +
-            "</td>" +
-            "</tr>" +
-            "<tr>" +
-            "<td>ISV:</td><td>" +
-            isv +
-            "</td>" +
-            "</tr>" +
-            "<tr>" +
-            "<td>Total:</td><td>" +
-            total +
-            "</td>" +
-            "</tr>";
-
-        detailtable = getTable("", tbodyDetails, "Calculos");
-        console.log(tbodyDetails);
-
-        modalBody.innerHTML += detailtable;
-    }
 }
 
 function getCalculates() {
@@ -163,22 +112,16 @@ function getCalculates() {
 
     tbodyDetails =
         "<tr>" +
-        "<td>Subtotal:</td><td>" +
-        subtotal +
-        "</td>" +
+            "<th>Subtotal:</th><td>L " + subtotal + "</td>" +  
         "</tr>" +
         "<tr>" +
-        "<td>ISV:</td><td>" +
-        isv +
-        "</td>" +
+            "<th>ISV:</th><td>L " + isv + "</td>" +
         "</tr>" +
         "<tr>" +
-        "<td>Total:</td><td>" +
-        total +
-        "</td>" +
+            "<th>Total:</th><td>L " + total + "</td>" +
         "</tr>";
 
-    detailtable = getTable("", tbodyDetails, "Calculos");
+    detailtable = getTable("", tbodyDetails, " ");
     console.log(tbodyDetails);
 
     modalBody.innerHTML += detailtable;
